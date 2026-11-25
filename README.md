@@ -215,7 +215,7 @@ Within one contract type the ranking is much weaker than overall: contract carri
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt -r requirements-dev.txt
-make all     # data -> features -> run -> report -> notebook, about 55 s for the run stage
+make all     # data -> features -> run -> report -> notebook, about 48 s for the run stage
 make test    # 14 tests on synthetic customers, no download
 ```
 
