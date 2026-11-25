@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Churn, Survival and Lifetime Value</title>
+<style>
+:root { --fg:#1a202c; --muted:#4a5568; --bg:#ffffff; --line:#e2e8f0; --accent:#2b6cb0; --card:#f7fafc; }
+@media (prefers-color-scheme: dark) { :root { --fg:#e2e8f0; --muted:#a0aec0; --bg:#171923;
+  --line:#2d3748; --accent:#63b3ed; --card:#1a202c; } }
+body { background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,sans-serif;
+  max-width:960px; margin:0 auto; padding:24px 16px 64px; }
+h1 { margin-bottom:4px; } h2 { margin-top:40px; border-bottom:1px solid var(--line); padding-bottom:4px; }
+.sub { color:var(--muted); margin-top:0; }
+.tldr { background:var(--card); border-left:4px solid var(--accent); padding:12px 16px; border-radius:4px; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin:20px 0; }
+.kpi { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:12px; }
+.kpi b { display:block; font-size:24px; color:var(--accent); }
+.kpi span { color:var(--muted); font-size:14px; }
+table { border-collapse:collapse; width:100%; font-size:14px; margin:12px 0; display:block; overflow-x:auto; }
+th,td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; white-space:nowrap; }
+figure { margin:16px 0; } img { max-width:100%; height:auto; background:#fff; border-radius:4px; }
+</style></head><body>
+<h1>Customer Churn, Survival and Lifetime Value</h1>
+<p class="sub">When do telecom customers leave, what is each one worth, and who should get a retention offer
+when the budget is fixed?</p>
+<div class="tldr"><b>TL;DR.</b> A log-normal survival model ranks 7,032 customers by time to churn
+with C-index <b>0.856</b> (95% CI 0.842–0.869), 0.087 above contract type alone, and turns
+each active customer's curve into a 5-year lifetime value. With a $50.0k budget for one-month-free offers
+and a 25% save rate, choosing customers by expected value gained (a knapsack) earns
+<b>$10.0k</b> net from 670 offers ($35.8k spent), against $9.0k from
+913 offers when the budget goes to the highest churn risks first. The value plan wins in
+100% of 100 model refits (difference $995, 95% CI $545 to $1.4k) and leaves
+$14.2k unspent, because no further offer pays for itself.</div>
+<div class="kpis">
+<div class="kpi"><b>0.856</b><span>C-index, lifetime model (hold-out)</span></div>
+<div class="kpi"><b>$10.0k</b><span>net gain, value plan (28% on spend)</span></div>
+<div class="kpi"><b>$1.1k</b><span>mean 5-year CLV per active customer</span></div>
+<div class="kpi"><b>13.9%</b><span>save rate below which no offer pays</span></div>
+</div>
+<h2>Who leaves, and when</h2>
+<p>Kaplan-Meier retention differs sharply by contract (log-rank χ² 2,353, 2 df) and payment method
+(χ² 865, 3 df). 70.3% of month-to-month customers are still there after a year and
+12.9% after six; two-year contracts keep 93.6%.</p>
+<figure><img alt="Kaplan-Meier retention by contract and payment method with 95% bands" src="figures/km_curves.png"></figure>
+<table><thead><tr><th>Group</th><th>Level</th><th>Customers</th><th>Churned</th><th>Still a customer at 12 m</th><th>24 m</th><th>48 m</th><th>72 m</th></tr></thead><tbody><tr><td>Contract</td><td>Month-to-month</td><td>3,875</td><td>1,655</td><td>70.3%</td><td>58.6%</td><td>39.7%</td><td>12.9%</td></tr><tr><td>Contract</td><td>One year</td><td>1,472</td><td>166</td><td>99.1%</td><td>97.8%</td><td>91.7%</td><td>56.8%</td></tr><tr><td>Contract</td><td>Two year</td><td>1,685</td><td>48</td><td>100.0%</td><td>100.0%</td><td>99.6%</td><td>93.6%</td></tr><tr><td>Payment</td><td>Bank transfer (automatic)</td><td>1,542</td><td>258</td><td>93.1%</td><td>90.2%</td><td>84.7%</td><td>74.5%</td></tr><tr><td>Payment</td><td>Credit card (automatic)</td><td>1,521</td><td>232</td><td>94.5%</td><td>91.3%</td><td>85.5%</td><td>75.8%</td></tr><tr><td>Payment</td><td>Electronic check</td><td>2,365</td><td>1,071</td><td>72.7%</td><td>62.4%</td><td>49.3%</td><td>29.5%</td></tr><tr><td>Payment</td><td>Mailed check</td><td>1,604</td><td>308</td><td>82.8%</td><td>79.7%</td><td>74.0%</td><td>72.6%</td></tr></tbody></table>
+<h2>Model comparison</h2>
+<p>5,274 customers train the models; 1,758 held out (467 churned) score them.
+C-index uses every hold-out customer; 12-month metrics use the 1,480 whose 12-month outcome is known.
+95% CIs from 500 paired bootstrap resamples.</p>
+<table><thead><tr><th>Model</th><th>C-index (95% CI)</th><th>12-month ROC-AUC (95% CI)</th><th>12-month Brier</th><th>Calib. error</th></tr></thead><tbody><tr><td>Baseline: Kaplan-Meier by contract only</td><td>0.768 (0.756–0.782)</td><td>0.799 (0.784–0.814)</td><td>0.1156</td><td>0.0243</td></tr><tr><td>Cox proportional hazards</td><td>0.855 (0.841–0.868)</td><td>0.895 (0.877–0.911)</td><td>0.0964</td><td>0.0284</td></tr><tr><td>Cox, stratified by contract</td><td>0.856 (0.842–0.869)</td><td>0.896 (0.877–0.911)</td><td>0.0959</td><td>0.0198</td></tr><tr><td>Log-normal AFT (lifetime model)</td><td>0.856 (0.842–0.869)</td><td>0.900 (0.881–0.915)</td><td>0.0942</td><td>0.0257</td></tr><tr><td>XGBoost, 12-month churn classifier</td><td>0.857 (0.844–0.869)</td><td>0.906 (0.888–0.919)</td><td>0.0911</td><td>0.0117</td></tr></tbody></table>
+<p>The 12-month classifier is slightly sharper on its own question (ROC-AUC +0.007, CI 0.001–0.013)
+but had to drop 781 recent customers whose outcome is not known yet, and it cannot say anything
+about month 13 onward, which is where most lifetime value sits.</p>
+<figure><img alt="Predicted against observed 12-month churn by decile on hold-out customers" src="figures/calibration.png"></figure>
+<h2>Proportional hazards check</h2>
+<p>The Schoenfeld test rejects proportional hazards (p &lt; 0.01) for 7 covariates in the plain
+Cox model: contract_one_year, multiple_lines, online_security, pay_mailed_check, streaming_movies, streaming_tv, tech_support. Stratifying by contract gives each contract its own baseline hazard and clears the
+contract terms; 5 add-on service terms still drift (multiple_lines, online_security, streaming_movies, streaming_tv, tech_support). The ranking barely moves
+(C-index change +0.0003, CI -0.0003–0.0010), and lifetime value uses the AFT model, which does
+not assume proportional hazards.</p>
+<table><thead><tr><th>Covariate</th><th>Schoenfeld χ²</th><th>p (Cox)</th><th>p (stratified Cox)</th></tr></thead><tbody><tr><td>contract_one_year</td><td>27.4</td><td>0.0000</td><td>absorbed by strata</td></tr><tr><td>multiple_lines</td><td>16.2</td><td>0.0001</td><td>0.0004</td></tr><tr><td>tech_support</td><td>14.0</td><td>0.0002</td><td>0.0003</td></tr><tr><td>online_security</td><td>9.4</td><td>0.0021</td><td>0.0058</td></tr><tr><td>pay_mailed_check</td><td>9.3</td><td>0.0023</td><td>0.0104</td></tr><tr><td>streaming_tv</td><td>9.3</td><td>0.0024</td><td>0.0017</td></tr><tr><td>streaming_movies</td><td>8.0</td><td>0.0046</td><td>0.0009</td></tr><tr><td>contract_two_year</td><td>5.8</td><td>0.0161</td><td>absorbed by strata</td></tr></tbody></table>
+<h2>What drives churn</h2>
+<p>Hazard ratios from the Cox model stratified by contract, fitted on every customer. Fiber internet carries
+3.91× the churn hazard of no internet; electronic-check payers 1.77×; online security
+(0.53×), online backup (0.53×) and tech support (0.67×) go with staying.</p>
+<figure><img alt="Hazard ratios with 95% CIs from the Cox model stratified by contract" src="figures/hazard_ratios.png"></figure>
+<table><thead><tr><th>Covariate</th><th>Hazard ratio</th><th>95% CI</th><th>p</th></tr></thead><tbody><tr><td>internet_fiber</td><td>3.91</td><td>3.14–4.87</td><td>0</td></tr><tr><td>internet_dsl</td><td>2.68</td><td>2.13–3.37</td><td>0</td></tr><tr><td>pay_electronic_check</td><td>1.77</td><td>1.54–2.04</td><td>0</td></tr><tr><td>pay_mailed_check</td><td>1.76</td><td>1.48–2.09</td><td>0</td></tr><tr><td>online_security</td><td>0.53</td><td>0.47–0.60</td><td>0</td></tr><tr><td>online_backup</td><td>0.53</td><td>0.48–0.59</td><td>0</td></tr><tr><td>partner</td><td>0.61</td><td>0.55–0.68</td><td>0</td></tr><tr><td>multiple_lines</td><td>0.64</td><td>0.58–0.71</td><td>0</td></tr><tr><td>tech_support</td><td>0.67</td><td>0.59–0.76</td><td>0</td></tr><tr><td>device_protection</td><td>0.74</td><td>0.67–0.82</td><td>0</td></tr></tbody></table>
+<h2>Lifetime value</h2>
+<p>For an active customer at tenure t, the chance of still paying k months from now is S(t+k)/S(t) from the
+log-normal AFT model (lowest AIC of three families). CLV is 45% margin on the monthly bill,
+discounted at 10% a year, over at most 60 months.</p>
+<table><thead><tr><th>AFT family</th><th>AIC</th><th>Δ AIC</th></tr></thead><tbody><tr><td>lognormal</td><td>13,435</td><td>+0</td></tr><tr><td>loglogistic</td><td>13,509</td><td>+73</td></tr><tr><td>weibull</td><td>13,558</td><td>+123</td></tr></tbody></table>
+<table><thead><tr><th>Contract</th><th>Active customers</th><th>P(churn, next 12 m)</th><th>Expected months (of 60)</th><th>Mean CLV</th><th>In value plan</th><th>In risk plan</th></tr></thead><tbody><tr><td>Month-to-month</td><td>2,220</td><td>23.8%</td><td>36.6</td><td>$851</td><td>670</td><td>913</td></tr><tr><td>One year</td><td>1,306</td><td>4.0%</td><td>54.4</td><td>$1.2k</td><td>0</td><td>0</td></tr><tr><td>Two year</td><td>1,637</td><td>1.3%</td><td>58.1</td><td>$1.3k</td><td>0</td><td>0</td></tr></tbody></table>
+<h2>Who gets the offer</h2>
+<p>The offer: 1 month free for a 12-month commitment, costing one monthly bill.
+Expected gain = save rate × (CLV if kept 12 months − CLV now) − cost. Only 670 active
+customers have a positive expected gain at a 25% save rate. All 670 of them are also in
+the risk-first plan: high-value customers are high-value because they rarely leave, so gain rises with risk.
+The knapsack's contribution is knowing where to stop.</p>
+<table><thead><tr><th>Plan</th><th>Customers</th><th>Spend</th><th>Net gain (95% CI)</th><th>Expected saves</th><th>Mean churn risk</th><th>Mean CLV</th></tr></thead><tbody><tr><td>Value plan (knapsack on expected gain)</td><td>670</td><td>$35.8k</td><td>$10.0k ($8.8k to $11.2k)</td><td>67</td><td>40.1%</td><td>$504</td></tr><tr><td>Highest churn probability first</td><td>913</td><td>$50.0k</td><td>$9.0k ($7.5k to $10.6k)</td><td>83</td><td>36.5%</td><td>$562</td></tr></tbody></table>
+<figure><img alt="Active customers by churn risk and lifetime value, coloured by plan" src="figures/targeting_map.png"></figure>
+<h2>Budget and save-rate sensitivity</h2>
+<p>The save rate is the assumption that matters most. At 10% the value plan makes no offers ($0)
+while spending the budget on the riskiest customers loses -$26.4k. At 50% both plans grow and the
+25% plan kept as is earns $55.8k against $68.0k re-optimised. With a
+$150.0k budget the risk-first plan falls to -$38.6k, while the value plan stays at
+$10.0k because it stops when offers stop paying.</p>
+<figure><img alt="Net gain of both plans across budgets and save-rate assumptions" src="figures/plan_curves.png"></figure>
+<table><thead><tr><th>Save rate</th><th>Value plan size</th><th>Value plan gain</th><th>Gain of the 25% plan kept as is</th><th>Risk plan gain</th></tr></thead><tbody><tr><td>10%</td><td>0</td><td>$0</td><td>-$17.5k</td><td>-$26.4k</td></tr><tr><td>15%</td><td>35</td><td>$80</td><td>-$8.3k</td><td>-$14.6k</td></tr><tr><td>25%</td><td>670</td><td>$10.0k</td><td>$10.0k</td><td>$9.0k</td></tr><tr><td>35%</td><td>910</td><td>$32.6k</td><td>$28.3k</td><td>$32.6k</td></tr><tr><td>50%</td><td>910</td><td>$68.0k</td><td>$55.8k</td><td>$68.0k</td></tr></tbody></table>
+<table><thead><tr><th>Budget</th><th>Value plan size</th><th>Value plan spend</th><th>Value plan gain</th><th>Risk plan gain</th></tr></thead><tbody><tr><td>$10.0k</td><td>161</td><td>$10.0k</td><td>$5.5k</td><td>$5.5k</td></tr><tr><td>$25.0k</td><td>423</td><td>$25.0k</td><td>$9.3k</td><td>$9.3k</td></tr><tr><td>$50.0k</td><td>670</td><td>$35.8k</td><td>$10.0k</td><td>$9.0k</td></tr><tr><td>$75.0k</td><td>670</td><td>$35.8k</td><td>$10.0k</td><td>$3.0k</td></tr><tr><td>$100.0k</td><td>670</td><td>$35.8k</td><td>$10.0k</td><td>-$7.2k</td></tr><tr><td>$150.0k</td><td>670</td><td>$35.8k</td><td>$10.0k</td><td>-$38.6k</td></tr></tbody></table>
+<h2>Errors by segment</h2>
+<p>Within one contract type the ranking is much harder: the contract carries most of the signal.</p>
+<figure><img alt="Hold-out C-index and 12-month churn by segment" src="figures/segments.png"></figure>
+<table><thead><tr><th>Segment</th><th>Level</th><th>Customers</th><th>Churned</th><th>C-index (95% CI)</th><th>Observed 12-m churn</th><th>Predicted</th></tr></thead><tbody><tr><td>Contract</td><td>Month-to-month</td><td>978</td><td>414</td><td>0.713 (0.687–0.736)</td><td>34.6%</td><td>33.3%</td></tr><tr><td>Contract</td><td>One year</td><td>372</td><td>43</td><td>0.562 (0.454–0.646)</td><td>1.1%</td><td>2.5%</td></tr><tr><td>Contract</td><td>Two year</td><td>408</td><td>10</td><td>0.577 (0.412–0.758)</td><td>0.0%</td><td>0.4%</td></tr><tr><td>Internet</td><td>DSL</td><td>604</td><td>113</td><td>0.867 (0.840–0.889)</td><td>13.8%</td><td>12.4%</td></tr><tr><td>Internet</td><td>Fiber optic</td><td>772</td><td>323</td><td>0.816 (0.793–0.832)</td><td>22.8%</td><td>24.8%</td></tr><tr><td>Internet</td><td>No</td><td>382</td><td>31</td><td>0.897 (0.852–0.941)</td><td>10.4%</td><td>6.6%</td></tr><tr><td>Payment</td><td>Bank transfer (automatic)</td><td>384</td><td>71</td><td>0.894 (0.868–0.920)</td><td>7.5%</td><td>7.5%</td></tr><tr><td>Payment</td><td>Credit card (automatic)</td><td>384</td><td>58</td><td>0.863 (0.829–0.896)</td><td>6.9%</td><td>6.8%</td></tr><tr><td>Payment</td><td>Electronic check</td><td>578</td><td>264</td><td>0.784 (0.759–0.814)</td><td>29.8%</td><td>31.4%</td></tr><tr><td>Payment</td><td>Mailed check</td><td>412</td><td>74</td><td>0.810 (0.773–0.853)</td><td>21.2%</td><td>17.2%</td></tr><tr><td>Age</td><td>senior</td><td>285</td><td>115</td><td>0.823 (0.787–0.857)</td><td>17.6%</td><td>22.6%</td></tr><tr><td>Age</td><td>under 65</td><td>1,473</td><td>352</td><td>0.860 (0.847–0.873)</td><td>17.3%</td><td>16.0%</td></tr><tr><td>Gender</td><td>female</td><td>849</td><td>232</td><td>0.847 (0.824–0.865)</td><td>18.1%</td><td>17.4%</td></tr><tr><td>Gender</td><td>male</td><td>909</td><td>235</td><td>0.864 (0.847–0.881)</td><td>16.7%</td><td>16.8%</td></tr></tbody></table>
+<h2>Data</h2>
+<p>IBM Telco customer churn sample: 7,043 customers of a fictional telecom provider, 21 fields, one
+snapshot. Churn rate 26.5%. Monthly price is almost fully explained by the services held
+(R² 0.999), so price stays out of the hazard models.</p>
+<table><thead><tr><th>Step</th><th>Rows in</th><th>Rows flagged</th><th>Rows dropped</th><th>Rows out</th></tr></thead><tbody><tr><td>drop customers with tenure 0 (signed up, no month billed; TotalCharges blank)</td><td>7,043</td><td>0</td><td>11</td><td>7,032</td></tr><tr><td>flag TotalCharges more than 35% away from tenure x monthly price (kept)</td><td>7,032</td><td>6</td><td>0</td><td>7,032</td></tr><tr><td>identical profiles under different ids (kept: distinct customers)</td><td>7,032</td><td>22</td><td>0</td><td>7,032</td></tr></tbody></table>
+<h2>Limitations</h2>
+<ul>
+<li>One snapshot: tenure is observed once per customer, and customers who left before the snapshot month are not
+in the file, so long-tenure retention is likely overstated and curves past 72 months are extrapolation.</li>
+<li>Contract, services and payment method are current values; a customer may have switched them.</li>
+<li>Margin, discount rate, offer cost and the save rate are assumptions. The save rate is not measured; an A/B
+test of the offer would replace it.</li>
+<li>The data is a sample built for teaching, not a real operator's book.</li>
+</ul>
+</body></html>

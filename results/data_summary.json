@@ -1,0 +1,49 @@
+{
+  "rows": 7043,
+  "columns": 21,
+  "churn_rate": 0.2653698707936959,
+  "blank_total_charges": 11,
+  "blank_total_tenure": [
+    0
+  ],
+  "zero_tenure": 11,
+  "charges_gap_median": 0.019997404122495836,
+  "charges_gap_flagged": 6,
+  "duplicate_rows_ignoring_id": 22,
+  "tenure_range": [
+    0,
+    72
+  ],
+  "monthly_range": [
+    18.25,
+    118.75
+  ],
+  "max_tenure_share": 0.05139855175351413,
+  "active": 5174,
+  "monthly_mean": 64.76,
+  "cleaning": [
+    {
+      "step": "drop customers with tenure 0 (signed up, no month billed; TotalCharges blank)",
+      "rows_before": 7043,
+      "changed": 0,
+      "dropped": 11,
+      "rows_after": 7032
+    },
+    {
+      "step": "flag TotalCharges more than 35% away from tenure x monthly price (kept)",
+      "rows_before": 7032,
+      "changed": 6,
+      "dropped": 0,
+      "rows_after": 7032
+    },
+    {
+      "step": "identical profiles under different ids (kept: distinct customers)",
+      "rows_before": 7032,
+      "changed": 22,
+      "dropped": 0,
+      "rows_after": 7032
+    }
+  ],
+  "modelling_rows": 7032,
+  "price_r2_from_services": 0.9988413827312144
+}

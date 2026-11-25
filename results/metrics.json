@@ -1,0 +1,1144 @@
+{
+  "headline": {
+    "cindex": 0.855571291240278,
+    "cindex_ci": [
+      0.8417539077492477,
+      0.8688676102130655
+    ],
+    "value_plan_gain": 10001.329050290122,
+    "risk_plan_gain": 9006.231919284557,
+    "gain_ratio": 1.11048984080399,
+    "difference": 995.0971310055647,
+    "difference_ci": [
+      545.010443044041,
+      1372.6974466483825
+    ],
+    "budget": 50000,
+    "save_rate": 0.25
+  },
+  "split": {
+    "train": 5274,
+    "test": 1758,
+    "test_known": 1480,
+    "test_events": 467
+  },
+  "km": {
+    "contract": {
+      "logrank_statistic": 2352.872538259339,
+      "logrank_p": 0.0,
+      "pairwise": [
+        {
+          "a": "Month-to-month",
+          "b": "One year",
+          "statistic": 926.06455862437,
+          "p": 2.117326693601697e-203
+        },
+        {
+          "a": "Month-to-month",
+          "b": "Two year",
+          "statistic": 1550.510306876839,
+          "p": 0.0
+        },
+        {
+          "a": "One year",
+          "b": "Two year",
+          "statistic": 256.2177668056069,
+          "p": 1.1454483319857571e-57
+        }
+      ],
+      "levels": {
+        "Month-to-month": {
+          "n": 3875,
+          "events": 1655,
+          "at": {
+            "12": 0.7030966363488644,
+            "24": 0.5859154739046663,
+            "48": 0.397263779009727,
+            "72": 0.1289519006143942
+          }
+        },
+        "One year": {
+          "n": 1472,
+          "events": 166,
+          "at": {
+            "12": 0.9908082040748656,
+            "24": 0.9782723764279155,
+            "48": 0.9165468041589897,
+            "72": 0.5681456820286713
+          }
+        },
+        "Two year": {
+          "n": 1685,
+          "events": 48,
+          "at": {
+            "12": 1.0,
+            "24": 1.0,
+            "48": 0.995718930972045,
+            "72": 0.9357385806467265
+          }
+        }
+      }
+    },
+    "payment_method": {
+      "logrank_statistic": 865.2394631323975,
+      "logrank_p": 3.0665292229507076e-187,
+      "pairwise": [
+        {
+          "a": "Bank transfer (automatic)",
+          "b": "Credit card (automatic)",
+          "statistic": 0.8682946879720678,
+          "p": 0.3514278440573516
+        },
+        {
+          "a": "Bank transfer (automatic)",
+          "b": "Electronic check",
+          "statistic": 510.035058964371,
+          "p": 6.231417340693129e-113
+        },
+        {
+          "a": "Bank transfer (automatic)",
+          "b": "Mailed check",
+          "statistic": 51.071855125804554,
+          "p": 8.904592664955103e-13
+        },
+        {
+          "a": "Credit card (automatic)",
+          "b": "Electronic check",
+          "statistic": 539.7401774494506,
+          "p": 2.1476147644388552e-119
+        },
+        {
+          "a": "Credit card (automatic)",
+          "b": "Mailed check",
+          "statistic": 64.81517439291719,
+          "p": 8.226319994310362e-16
+        },
+        {
+          "a": "Electronic check",
+          "b": "Mailed check",
+          "statistic": 152.4554548566908,
+          "p": 5.038297302029095e-35
+        }
+      ],
+      "levels": {
+        "Bank transfer (automatic)": {
+          "n": 1542,
+          "events": 258,
+          "at": {
+            "12": 0.9311307422421474,
+            "24": 0.9022197440941564,
+            "48": 0.8473829951716643,
+            "72": 0.7451814713691902
+          }
+        },
+        "Credit card (automatic)": {
+          "n": 1521,
+          "events": 232,
+          "at": {
+            "12": 0.9448023088948427,
+            "24": 0.9127646991311961,
+            "48": 0.8553879854476005,
+            "72": 0.7577176516289378
+          }
+        },
+        "Electronic check": {
+          "n": 2365,
+          "events": 1071,
+          "at": {
+            "12": 0.7270324425729481,
+            "24": 0.6241074503442442,
+            "48": 0.49271897905119455,
+            "72": 0.29453604073504
+          }
+        },
+        "Mailed check": {
+          "n": 1604,
+          "events": 308,
+          "at": {
+            "12": 0.828109945812774,
+            "24": 0.7965224741250969,
+            "48": 0.7395210752768724,
+            "72": 0.7262398847089232
+          }
+        }
+      }
+    }
+  },
+  "models": {
+    "km_contract": {
+      "cindex": 0.7681100060593246,
+      "cindex_ci": [
+        0.7563324201950474,
+        0.781535385263049
+      ],
+      "auc": 0.7993102373127253,
+      "auc_ci": [
+        0.783819002811165,
+        0.8137879371885632
+      ],
+      "brier": 0.11555617600410287,
+      "ece": 0.024332352600819566,
+      "mean_p": 0.14969124886704144
+    },
+    "cox": {
+      "cindex": 0.8551848093978168,
+      "cindex_ci": [
+        0.8414147525249243,
+        0.8683638153961637
+      ],
+      "auc": 0.8952057039047312,
+      "auc_ci": [
+        0.8766068366977531,
+        0.9106427893935346
+      ],
+      "brier": 0.09642931398775796,
+      "ece": 0.028383265542902835,
+      "mean_p": 0.15770272115058365
+    },
+    "cox_stratified": {
+      "cindex": 0.855501102583831,
+      "cindex_ci": [
+        0.8415943782440984,
+        0.8685751309002047
+      ],
+      "auc": 0.8957831574459691,
+      "auc_ci": [
+        0.8771754386989836,
+        0.9112602853087665
+      ],
+      "brier": 0.09592214066799401,
+      "ece": 0.01983403614498972,
+      "mean_p": 0.15570755379245918
+    },
+    "aft": {
+      "cindex": 0.855571291240278,
+      "cindex_ci": [
+        0.8417539077492477,
+        0.8688676102130655
+      ],
+      "auc": 0.8995119483568823,
+      "auc_ci": [
+        0.8805072507083965,
+        0.9147961349856066
+      ],
+      "brier": 0.09416862433973108,
+      "ece": 0.025669342970887805,
+      "mean_p": 0.17119604827417112
+    },
+    "xgboost_12m": {
+      "cindex": 0.856562817070592,
+      "cindex_ci": [
+        0.8436002799706149,
+        0.869275306372847
+      ],
+      "auc": 0.9061614133771965,
+      "auc_ci": [
+        0.8883715722493966,
+        0.9193839565115051
+      ],
+      "brier": 0.09109161794185638,
+      "ece": 0.011689452176309513,
+      "mean_p": 0.181959331035614
+    }
+  },
+  "comparisons": {
+    "aft_vs_km_cindex": {
+      "mean": 0.08736522119961515,
+      "ci": [
+        0.07404676881970967,
+        0.10125247885300727
+      ],
+      "share_a_better": 1.0
+    },
+    "cox_stratified_vs_cox_cindex": {
+      "mean": 0.0002979187087654225,
+      "ci": [
+        -0.00032049236693774686,
+        0.0009717094568719735
+      ],
+      "share_a_better": 0.804
+    },
+    "aft_vs_cox_stratified_cindex": {
+      "mean": 8.05398960960102e-05,
+      "ci": [
+        -0.0023567102946088826,
+        0.002270902732382335
+      ],
+      "share_a_better": 0.514
+    },
+    "xgboost_vs_aft_auc": {
+      "mean": 0.006911167024502893,
+      "ci": [
+        0.0005963454166857368,
+        0.013233666661241567
+      ],
+      "share_a_better": 0.984
+    }
+  },
+  "fit": {
+    "cox_penalizer": 0.001,
+    "cox_penalizer_cv": {
+      "0.001": 0.867710765771089,
+      "0.01": 0.8671321348570891,
+      "0.1": 0.8573907635855921
+    },
+    "ph_test": [
+      {
+        "feature": "contract_one_year",
+        "statistic": 27.42786,
+        "p": 0.0
+      },
+      {
+        "feature": "contract_two_year",
+        "statistic": 5.79069,
+        "p": 0.01611
+      },
+      {
+        "feature": "dependents",
+        "statistic": 0.00227,
+        "p": 0.962
+      },
+      {
+        "feature": "device_protection",
+        "statistic": 4.90219,
+        "p": 0.02682
+      },
+      {
+        "feature": "internet_dsl",
+        "statistic": 0.13144,
+        "p": 0.71694
+      },
+      {
+        "feature": "internet_fiber",
+        "statistic": 2.10653,
+        "p": 0.14667
+      },
+      {
+        "feature": "multiple_lines",
+        "statistic": 16.24864,
+        "p": 6e-05
+      },
+      {
+        "feature": "online_backup",
+        "statistic": 4.969,
+        "p": 0.02581
+      },
+      {
+        "feature": "online_security",
+        "statistic": 9.43915,
+        "p": 0.00212
+      },
+      {
+        "feature": "paperless_billing",
+        "statistic": 0.31106,
+        "p": 0.57703
+      },
+      {
+        "feature": "partner",
+        "statistic": 3.79139,
+        "p": 0.05152
+      },
+      {
+        "feature": "pay_credit_card",
+        "statistic": 0.4046,
+        "p": 0.52472
+      },
+      {
+        "feature": "pay_electronic_check",
+        "statistic": 4.8631,
+        "p": 0.02744
+      },
+      {
+        "feature": "pay_mailed_check",
+        "statistic": 9.27917,
+        "p": 0.00232
+      },
+      {
+        "feature": "phone_service",
+        "statistic": 0.20367,
+        "p": 0.65177
+      },
+      {
+        "feature": "senior",
+        "statistic": 0.40964,
+        "p": 0.52215
+      },
+      {
+        "feature": "streaming_movies",
+        "statistic": 8.01154,
+        "p": 0.00465
+      },
+      {
+        "feature": "streaming_tv",
+        "statistic": 9.2517,
+        "p": 0.00235
+      },
+      {
+        "feature": "tech_support",
+        "statistic": 13.97736,
+        "p": 0.00019
+      }
+    ],
+    "ph_failing": [
+      "contract_one_year",
+      "multiple_lines",
+      "online_security",
+      "pay_mailed_check",
+      "streaming_movies",
+      "streaming_tv",
+      "tech_support"
+    ],
+    "ph_test_stratified": [
+      {
+        "feature": "dependents",
+        "statistic": 0.00583,
+        "p": 0.93912
+      },
+      {
+        "feature": "device_protection",
+        "statistic": 5.25636,
+        "p": 0.02187
+      },
+      {
+        "feature": "internet_dsl",
+        "statistic": 0.47703,
+        "p": 0.48977
+      },
+      {
+        "feature": "internet_fiber",
+        "statistic": 1.77015,
+        "p": 0.18336
+      },
+      {
+        "feature": "multiple_lines",
+        "statistic": 12.62158,
+        "p": 0.00038
+      },
+      {
+        "feature": "online_backup",
+        "statistic": 3.5617,
+        "p": 0.05913
+      },
+      {
+        "feature": "online_security",
+        "statistic": 7.60978,
+        "p": 0.00581
+      },
+      {
+        "feature": "paperless_billing",
+        "statistic": 0.18072,
+        "p": 0.67076
+      },
+      {
+        "feature": "partner",
+        "statistic": 4.03189,
+        "p": 0.04465
+      },
+      {
+        "feature": "pay_credit_card",
+        "statistic": 0.42106,
+        "p": 0.51641
+      },
+      {
+        "feature": "pay_electronic_check",
+        "statistic": 4.70982,
+        "p": 0.02999
+      },
+      {
+        "feature": "pay_mailed_check",
+        "statistic": 6.56213,
+        "p": 0.01042
+      },
+      {
+        "feature": "phone_service",
+        "statistic": 0.56576,
+        "p": 0.45195
+      },
+      {
+        "feature": "senior",
+        "statistic": 0.3959,
+        "p": 0.52921
+      },
+      {
+        "feature": "streaming_movies",
+        "statistic": 10.92015,
+        "p": 0.00095
+      },
+      {
+        "feature": "streaming_tv",
+        "statistic": 9.87399,
+        "p": 0.00168
+      },
+      {
+        "feature": "tech_support",
+        "statistic": 13.4217,
+        "p": 0.00025
+      }
+    ],
+    "ph_failing_stratified": [
+      "multiple_lines",
+      "online_security",
+      "streaming_movies",
+      "streaming_tv",
+      "tech_support"
+    ],
+    "aft_aic": {
+      "weibull": 13558.487060032196,
+      "lognormal": 13435.482718961153,
+      "loglogistic": 13508.625901367006
+    },
+    "aft_family": "lognormal",
+    "xgboost_params": {
+      "max_depth": 3,
+      "learning_rate": 0.03
+    },
+    "xgboost_inner_auc": 0.9113639772579182,
+    "classifier_rows": 4493,
+    "classifier_dropped": 781
+  },
+  "calibration": {
+    "cox_stratified": {
+      "predicted": [
+        0.0,
+        0.0,
+        0.0008,
+        0.0055,
+        0.0126,
+        0.0897,
+        0.1795,
+        0.2783,
+        0.4017,
+        0.5889
+      ],
+      "observed": [
+        0.0,
+        0.0,
+        0.0,
+        0.0068,
+        0.0135,
+        0.0811,
+        0.2027,
+        0.3716,
+        0.4054,
+        0.6554
+      ],
+      "n": [
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148
+      ]
+    },
+    "aft": {
+      "predicted": [
+        0.0002,
+        0.0014,
+        0.0049,
+        0.0123,
+        0.035,
+        0.1035,
+        0.2068,
+        0.3233,
+        0.4343,
+        0.5901
+      ],
+      "observed": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.027,
+        0.0743,
+        0.1892,
+        0.3784,
+        0.3919,
+        0.6757
+      ],
+      "n": [
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148
+      ]
+    },
+    "xgboost_12m": {
+      "predicted": [
+        0.0013,
+        0.0025,
+        0.0041,
+        0.0073,
+        0.0161,
+        0.0661,
+        0.1836,
+        0.3355,
+        0.5087,
+        0.6945
+      ],
+      "observed": [
+        0.0,
+        0.0,
+        0.0,
+        0.0135,
+        0.0068,
+        0.0676,
+        0.1824,
+        0.3446,
+        0.4392,
+        0.6824
+      ],
+      "n": [
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148,
+        148
+      ]
+    }
+  },
+  "segments": [
+    {
+      "segment": "contract",
+      "level": "Month-to-month",
+      "n": 978,
+      "events": 414,
+      "observed": 0.34610123119015046,
+      "predicted": 0.3325224174994425,
+      "cindex": 0.7132181213682639,
+      "cindex_ci": [
+        0.687213756285281,
+        0.7357977206252851
+      ]
+    },
+    {
+      "segment": "contract",
+      "level": "One year",
+      "n": 372,
+      "events": 43,
+      "observed": 0.011299435028248588,
+      "predicted": 0.024910416080031143,
+      "cindex": 0.5617807389460933,
+      "cindex_ci": [
+        0.45423198458975445,
+        0.6460306500625614
+      ]
+    },
+    {
+      "segment": "contract",
+      "level": "Two year",
+      "n": 408,
+      "events": 10,
+      "observed": 0.0,
+      "predicted": 0.003741713826201846,
+      "cindex": 0.5767220902612826,
+      "cindex_ci": [
+        0.41182856839149834,
+        0.7579223621461499
+      ]
+    },
+    {
+      "segment": "internet_service",
+      "level": "DSL",
+      "n": 604,
+      "events": 113,
+      "observed": 0.13765182186234817,
+      "predicted": 0.1243449756913619,
+      "cindex": 0.8672573516055463,
+      "cindex_ci": [
+        0.8398876890595554,
+        0.8890936863229222
+      ]
+    },
+    {
+      "segment": "internet_service",
+      "level": "Fiber optic",
+      "n": 772,
+      "events": 323,
+      "observed": 0.22812051649928264,
+      "predicted": 0.24805066683571253,
+      "cindex": 0.8160368049731116,
+      "cindex_ci": [
+        0.79326287505933,
+        0.831610214694983
+      ]
+    },
+    {
+      "segment": "internet_service",
+      "level": "No",
+      "n": 382,
+      "events": 31,
+      "observed": 0.10380622837370242,
+      "predicted": 0.06592532411677796,
+      "cindex": 0.8971029938959403,
+      "cindex_ci": [
+        0.851773356333896,
+        0.9411729499818673
+      ]
+    },
+    {
+      "segment": "payment_method",
+      "level": "Bank transfer (automatic)",
+      "n": 384,
+      "events": 71,
+      "observed": 0.07541899441340782,
+      "predicted": 0.07454414048831808,
+      "cindex": 0.8944761332933053,
+      "cindex_ci": [
+        0.867871193054339,
+        0.9201510135245238
+      ]
+    },
+    {
+      "segment": "payment_method",
+      "level": "Credit card (automatic)",
+      "n": 384,
+      "events": 58,
+      "observed": 0.06857142857142857,
+      "predicted": 0.06833802653227146,
+      "cindex": 0.862964099416999,
+      "cindex_ci": [
+        0.8287188410141869,
+        0.8961119693839796
+      ]
+    },
+    {
+      "segment": "payment_method",
+      "level": "Electronic check",
+      "n": 578,
+      "events": 264,
+      "observed": 0.2975708502024291,
+      "predicted": 0.31382174023952575,
+      "cindex": 0.7842347896006433,
+      "cindex_ci": [
+        0.7585349786600856,
+        0.8140353289285106
+      ]
+    },
+    {
+      "segment": "payment_method",
+      "level": "Mailed check",
+      "n": 412,
+      "events": 74,
+      "observed": 0.21223021582733814,
+      "predicted": 0.17171618772062827,
+      "cindex": 0.8096060660445082,
+      "cindex_ci": [
+        0.7733655357133048,
+        0.8526921858713566
+      ]
+    },
+    {
+      "segment": "senior_label",
+      "level": "senior",
+      "n": 285,
+      "events": 115,
+      "observed": 0.17578125,
+      "predicted": 0.22602485768949543,
+      "cindex": 0.8231099118199778,
+      "cindex_ci": [
+        0.7867616923823619,
+        0.8570531181307681
+      ]
+    },
+    {
+      "segment": "senior_label",
+      "level": "under 65",
+      "n": 1473,
+      "events": 352,
+      "observed": 0.17320261437908496,
+      "predicted": 0.15972858486704447,
+      "cindex": 0.860107784234365,
+      "cindex_ci": [
+        0.8468303356549401,
+        0.872786637434485
+      ]
+    },
+    {
+      "segment": "gender",
+      "level": "female",
+      "n": 849,
+      "events": 232,
+      "observed": 0.181058495821727,
+      "predicted": 0.17416346727472756,
+      "cindex": 0.8469987807779231,
+      "cindex_ci": [
+        0.8242462833665266,
+        0.8645450853812123
+      ]
+    },
+    {
+      "segment": "gender",
+      "level": "male",
+      "n": 909,
+      "events": 235,
+      "observed": 0.16666666666666666,
+      "predicted": 0.16839997630251824,
+      "cindex": 0.863658322503385,
+      "cindex_ci": [
+        0.846786798586532,
+        0.8811918384897248
+      ]
+    }
+  ],
+  "hazard_ratios": [
+    {
+      "feature": "senior",
+      "hr": 0.94197,
+      "lo": 0.84341,
+      "hi": 1.05206,
+      "p": 0.28912
+    },
+    {
+      "feature": "partner",
+      "hr": 0.60947,
+      "lo": 0.54736,
+      "hi": 0.67863,
+      "p": 0.0
+    },
+    {
+      "feature": "dependents",
+      "hr": 0.93562,
+      "lo": 0.81814,
+      "hi": 1.06998,
+      "p": 0.33106
+    },
+    {
+      "feature": "phone_service",
+      "hr": 1.08269,
+      "lo": 0.88935,
+      "hi": 1.31805,
+      "p": 0.42861
+    },
+    {
+      "feature": "multiple_lines",
+      "hr": 0.63844,
+      "lo": 0.57522,
+      "hi": 0.7086,
+      "p": 0.0
+    },
+    {
+      "feature": "internet_dsl",
+      "hr": 2.68162,
+      "lo": 2.1335,
+      "hi": 3.37054,
+      "p": 0.0
+    },
+    {
+      "feature": "internet_fiber",
+      "hr": 3.91065,
+      "lo": 3.13848,
+      "hi": 4.87279,
+      "p": 0.0
+    },
+    {
+      "feature": "online_security",
+      "hr": 0.52967,
+      "lo": 0.46523,
+      "hi": 0.60303,
+      "p": 0.0
+    },
+    {
+      "feature": "online_backup",
+      "hr": 0.53386,
+      "lo": 0.47955,
+      "hi": 0.59433,
+      "p": 0.0
+    },
+    {
+      "feature": "device_protection",
+      "hr": 0.74117,
+      "lo": 0.66591,
+      "hi": 0.82494,
+      "p": 0.0
+    },
+    {
+      "feature": "tech_support",
+      "hr": 0.66631,
+      "lo": 0.58635,
+      "hi": 0.75718,
+      "p": 0.0
+    },
+    {
+      "feature": "streaming_tv",
+      "hr": 0.96202,
+      "lo": 0.86478,
+      "hi": 1.0702,
+      "p": 0.47636
+    },
+    {
+      "feature": "streaming_movies",
+      "hr": 0.89469,
+      "lo": 0.80377,
+      "hi": 0.99589,
+      "p": 0.04182
+    },
+    {
+      "feature": "paperless_billing",
+      "hr": 1.20275,
+      "lo": 1.07698,
+      "hi": 1.34319,
+      "p": 0.00105
+    },
+    {
+      "feature": "pay_electronic_check",
+      "hr": 1.77268,
+      "lo": 1.54304,
+      "hi": 2.03649,
+      "p": 0.0
+    },
+    {
+      "feature": "pay_mailed_check",
+      "hr": 1.76182,
+      "lo": 1.48391,
+      "hi": 2.09178,
+      "p": 0.0
+    },
+    {
+      "feature": "pay_credit_card",
+      "hr": 0.91408,
+      "lo": 0.76643,
+      "hi": 1.09017,
+      "p": 0.31755
+    }
+  ],
+  "clv": {
+    "active": 5163,
+    "mean": 1075.8184685319034,
+    "median": 1000.2893244314814,
+    "total": 5554450.753030217,
+    "mean_months": 47.93150089960071,
+    "mean_p12": 0.11653729772774171,
+    "by_contract": [
+      {
+        "contract": "Month-to-month",
+        "customers": 2220,
+        "mean_clv": 850.7388,
+        "mean_months": 36.6314,
+        "mean_p12": 0.238,
+        "value_plan": 670,
+        "risk_plan": 913
+      },
+      {
+        "contract": "One year",
+        "customers": 1306,
+        "mean_clv": 1232.5211,
+        "mean_months": 54.4106,
+        "mean_p12": 0.0404,
+        "value_plan": 0,
+        "risk_plan": 0
+      },
+      {
+        "contract": "Two year",
+        "customers": 1637,
+        "mean_clv": 1256.0404,
+        "mean_months": 58.087,
+        "mean_p12": 0.0126,
+        "value_plan": 0,
+        "risk_plan": 0
+      }
+    ],
+    "gross_margin": 0.45,
+    "annual_discount": 0.1,
+    "horizon_months": 60,
+    "positive_gain_customers": 670,
+    "break_even_save_rate": 0.13864743124373513
+  },
+  "targeting": {
+    "save_rate": 0.25,
+    "budget": 50000,
+    "value_plan": {
+      "customers": 670,
+      "spend": 35803.9,
+      "net_gain": 10001.329050290122,
+      "expected_saves": 67.16054818199264,
+      "mean_p_churn": 0.40095849660891125,
+      "mean_clv": 503.96096159002775,
+      "month_to_month_share": 1.0
+    },
+    "risk_plan": {
+      "customers": 913,
+      "spend": 49983.09999999999,
+      "net_gain": 9006.231919284557,
+      "expected_saves": 83.42069631066582,
+      "mean_p_churn": 0.3654795019087221,
+      "mean_clv": 561.624381698652,
+      "month_to_month_share": 1.0
+    },
+    "overlap": 670,
+    "uncertainty": {
+      "refits": 100,
+      "value_plan_ci": [
+        8751.066038190622,
+        11187.939405966232
+      ],
+      "risk_plan_ci": [
+        7464.399533819164,
+        10615.82636541494
+      ],
+      "difference_ci": [
+        545.010443044041,
+        1372.6974466483825
+      ],
+      "difference_mean": 981.974864215269,
+      "share_value_better": 1.0,
+      "mean_clv_ci": [
+        1067.1745346320067,
+        1084.0416245884928
+      ]
+    },
+    "sensitivity": [
+      {
+        "save_rate": 0.1,
+        "value_plan_gain": 0.0,
+        "value_plan_customers": 0,
+        "risk_plan_gain": -26387.367232286175,
+        "base_plan_gain": -17481.80837988395,
+        "overlap_with_base": 0
+      },
+      {
+        "save_rate": 0.15,
+        "value_plan_gain": 80.19949929150582,
+        "value_plan_customers": 35,
+        "risk_plan_gain": -14589.500848429267,
+        "base_plan_gain": -8320.762569825929,
+        "overlap_with_base": 35
+      },
+      {
+        "save_rate": 0.25,
+        "value_plan_gain": 10001.329050290122,
+        "value_plan_customers": 670,
+        "risk_plan_gain": 9006.231919284557,
+        "base_plan_gain": 10001.329050290122,
+        "overlap_with_base": 670
+      },
+      {
+        "save_rate": 0.35,
+        "value_plan_gain": 32606.822051352698,
+        "value_plan_customers": 910,
+        "risk_plan_gain": 32601.964686998377,
+        "base_plan_gain": 28323.420670406165,
+        "overlap_with_base": 670
+      },
+      {
+        "save_rate": 0.5,
+        "value_plan_gain": 68009.74578764671,
+        "value_plan_customers": 910,
+        "risk_plan_gain": 67995.56383856913,
+        "base_plan_gain": 55806.55810058024,
+        "overlap_with_base": 670
+      }
+    ],
+    "budget_curve": [
+      {
+        "budget": 10000,
+        "value_plan_gain": 5538.563845736355,
+        "risk_plan_gain": 5533.622783234488,
+        "value_plan_customers": 161,
+        "value_plan_spend": 9998.75
+      },
+      {
+        "budget": 25000,
+        "value_plan_gain": 9263.313475281804,
+        "risk_plan_gain": 9260.135150505004,
+        "value_plan_customers": 423,
+        "value_plan_spend": 24998.949999999997
+      },
+      {
+        "budget": 50000,
+        "value_plan_gain": 10001.329050290122,
+        "risk_plan_gain": 9006.231919284557,
+        "value_plan_customers": 670,
+        "value_plan_spend": 35803.9
+      },
+      {
+        "budget": 75000,
+        "value_plan_gain": 10001.329050290122,
+        "risk_plan_gain": 2992.511364264289,
+        "value_plan_customers": 670,
+        "value_plan_spend": 35803.9
+      },
+      {
+        "budget": 100000,
+        "value_plan_gain": 10001.329050290122,
+        "risk_plan_gain": -7164.442560919068,
+        "value_plan_customers": 670,
+        "value_plan_spend": 35803.9
+      },
+      {
+        "budget": 150000,
+        "value_plan_gain": 10001.329050290122,
+        "risk_plan_gain": -38636.814817863684,
+        "value_plan_customers": 670,
+        "value_plan_spend": 35803.9
+      }
+    ],
+    "offer_months_free": 1,
+    "commitment_months": 12
+  },
+  "data": {
+    "rows": 7043,
+    "columns": 21,
+    "churn_rate": 0.2653698707936959,
+    "blank_total_charges": 11,
+    "blank_total_tenure": [
+      0
+    ],
+    "zero_tenure": 11,
+    "charges_gap_median": 0.019997404122495836,
+    "charges_gap_flagged": 6,
+    "duplicate_rows_ignoring_id": 22,
+    "tenure_range": [
+      0,
+      72
+    ],
+    "monthly_range": [
+      18.25,
+      118.75
+    ],
+    "max_tenure_share": 0.05139855175351413,
+    "active": 5174,
+    "monthly_mean": 64.76,
+    "cleaning": [
+      {
+        "step": "drop customers with tenure 0 (signed up, no month billed; TotalCharges blank)",
+        "rows_before": 7043,
+        "changed": 0,
+        "dropped": 11,
+        "rows_after": 7032
+      },
+      {
+        "step": "flag TotalCharges more than 35% away from tenure x monthly price (kept)",
+        "rows_before": 7032,
+        "changed": 6,
+        "dropped": 0,
+        "rows_after": 7032
+      },
+      {
+        "step": "identical profiles under different ids (kept: distinct customers)",
+        "rows_before": 7032,
+        "changed": 22,
+        "dropped": 0,
+        "rows_after": 7032
+      }
+    ],
+    "modelling_rows": 7032,
+    "price_r2_from_services": 0.9988413827312144
+  },
+  "runtime_s": 54.7
+}
