@@ -1,0 +1,56 @@
+# Paths and parameters for the churn survival and lifetime value pipeline. Paths are relative to the repo root.
+data:
+  url: https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv
+  csv: data/telco_customer_churn.csv
+  raw: data/raw.parquet
+  table: data/table.parquet
+  values: data/customer_values.csv   # per-customer CLV and plan membership (not committed)
+  min_csv_bytes: 500000
+
+paths:
+  results: results
+  docs: docs
+
+validation:
+  seed: 42
+  test_share: 0.25        # stratified hold-out share, used only for evaluation
+  folds: 5                # inner folds for light tuning on the training part
+  horizon_months: 12      # the fixed-horizon churn question compared across models
+  # TotalCharges should be close to tenure x MonthlyCharges (prices change, so only gross gaps are flagged)
+  charges_gap_tolerance: 0.35
+
+models:
+  cox:
+    penalizers: [0.001, 0.01, 0.1]
+    strata: [contract]    # stratify where the Schoenfeld test rejects proportional hazards
+    ph_alpha: 0.01
+  aft:
+    candidates: [weibull, lognormal, loglogistic]
+    penalizer: 0.01
+  xgboost:
+    grid:
+      max_depth: [2, 3, 4]
+      learning_rate: [0.03, 0.08]
+    n_estimators: 300
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+
+evaluation:
+  n_boot: 500
+  segment_boot: 200
+  calibration_bins: 10
+
+clv:
+  gross_margin: 0.45      # share of the monthly bill that is margin after network and service costs
+  annual_discount: 0.10
+  horizon_months: 60      # value is counted for at most five more years
+  refits: 100             # bootstrap refits of the lifetime model for plan uncertainty
+
+targeting:
+  budget: 50000           # dollars available for retention offers
+  offer_months_free: 1    # the offer: one month free in exchange for a 12-month commitment
+  save_rate: 0.25         # share of offered customers who accept and stay the 12 months
+  commitment_months: 12
+  save_rate_sensitivity: [0.10, 0.15, 0.25, 0.35, 0.50]
+  budget_curve: [10000, 25000, 50000, 75000, 100000, 150000]
